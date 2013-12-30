@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tracker',
+    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -98,3 +99,17 @@ if not os.path.exists(STATIC_ROOT):
 STATICFILES_DIRS = (
     os.path.join(MANAGE_PY_DIR, "static"),  
 )
+
+from datetime import timedelta
+
+CELERYBEAT_SCHEDULE = {
+    'add-every-30-seconds': {
+        'task': 'tracker.tasks.add',
+        'schedule': timedelta(seconds=5),
+        'args': (16, 16)
+    },
+}
+
+CELERY_TIMEZONE = 'UTC'
+
+CELERY_RESULT_BACKEND='djcelery.backends.database:DatabaseBackend'
