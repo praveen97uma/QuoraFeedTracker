@@ -5,3 +5,4 @@ local_settings.py
 deploy
 db.sqlite3
 *.swp
+celerybeat-schedule
